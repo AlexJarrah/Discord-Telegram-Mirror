@@ -9,9 +9,8 @@ import (
 )
 
 func main() {
-	if _, err := os.Stat("data/config.json"); err != nil {
-		os.Mkdir("data", 0755)
-		os.Create("data/config.json")
+	if err := createFiles(); err != nil {
+		log.Panic(err)
 	}
 
 	f, err := os.ReadFile("data/config.json")
@@ -23,4 +22,22 @@ func main() {
 	discord.Start(token)
 
 	select {}
+}
+
+func createFiles() error {
+	if _, err := os.Stat("data/config.json"); err == nil {
+		return nil
+	}
+
+	if err := os.Mkdir("data", 0755); err != nil {
+		return err
+	}
+
+	f, err := os.Create("data/config.json")
+	if err != nil {
+		return err
+	}
+
+	_, err = f.Write([]byte(`{ "discord": { "token": "", "guilds": [], "channels": [] }, "telegram": { "botToken": "", "outputChat": "", "outputThreadId": "" } }`))
+	return err
 }
