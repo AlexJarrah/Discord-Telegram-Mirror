@@ -5,6 +5,7 @@ import (
 	"github.com/quo0001/Discord-Telegram-Mirror/internal"
 )
 
+// Parses a Discord message into struct
 func parse(m *discordgo.MessageCreate) internal.Message {
 	msg := internal.Message{
 		Guild:   m.GuildID,

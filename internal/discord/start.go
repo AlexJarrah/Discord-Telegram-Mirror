@@ -1,23 +1,29 @@
 package discord
 
 import (
-	"log"
-
 	"github.com/bwmarrin/discordgo"
 )
 
-func Start(token string) {
+// Initiates the Discord monitoring via the provided token
+func Start(token string) error {
+	// Create a new Discord session
 	dg, err := discordgo.New(token)
 	if err != nil {
-		log.Panic(err)
+		return err
 	}
 
+	// Specify required intents for the session
 	dg.Identify.Intents = discordgo.IntentsAll
 
+	// Add a message creation handler
 	dg.AddHandler(messageCreate)
 
-	if err = dg.Open(); err != nil {
-		log.Panic(err)
+	// Open a websocket connection
+	if err := dg.Open(); err != nil {
+		return err
 	}
 	defer dg.Close()
+
+	// Wait for signals to exit
+	select {}
 }
