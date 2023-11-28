@@ -13,3 +13,7 @@ cd Discord-Telegram-Mirror
 
 1. Add your Discord account token, Telegram bot token, and the Telegram output chat ID to the configuration file.
 2. Optionally, specify the guilds and/or channels you want the bot to monitor. If no guilds or channels are provided, the bot will automatically monitor all channels accessible to your Discord account.
+
+## Disclaimer
+
+Using a user account as a bot is against the Discord Terms of Service. By using this tool, you acknowledge and understand that the developer is not responsible for any consequences or actions taken against your account due to violation of the Discord Terms of Service.
