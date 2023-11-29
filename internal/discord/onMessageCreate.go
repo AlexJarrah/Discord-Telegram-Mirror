@@ -1,7 +1,9 @@
 package discord
 
 import (
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/quo0001/Discord-Telegram-Mirror/internal"
@@ -10,6 +12,10 @@ import (
 
 // Handler function for new Discord messages
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
+	// Increment the message counter & update the monitor stats
+	internal.Counter++
+	fmt.Printf("\r%d messages forwarded | Latest message: %s", internal.Counter, time.Now().Format("01/02 03:04 PM"))
+
 	// Ignore messages from the signed in user
 	if m.Author.ID == s.State.User.ID {
 		return

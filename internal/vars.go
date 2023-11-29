@@ -1,3 +1,6 @@
 package internal
 
-var Config Configuration
+var (
+	Config  Configuration
+	Counter int
+)
