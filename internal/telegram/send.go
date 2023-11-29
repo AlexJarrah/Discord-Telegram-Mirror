@@ -27,6 +27,7 @@ func Send(chat, thread, text string) error {
 	q.Add("chat_id", chat)
 	q.Add("message_thread_id", thread)
 	q.Add("parse_mode", "HTML")
+	q.Add("disable_web_page_preview", "true")
 	q.Add("text", text)
 	url.RawQuery = q.Encode()
 
