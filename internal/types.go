@@ -1,5 +1,30 @@
 package internal
 
+type Configuration struct {
+	Credentials Credentials `json:"credentials"`
+	Rules       Rules       `json:"rules"`
+}
+
+type Credentials struct {
+	DiscordToken  string `json:"discordToken"`
+	TelegramToken string `json:"telegramToken"`
+}
+
+type Rules struct {
+	Guilds   []Rule `json:"guilds"`
+	Channels []Rule `json:"channels"`
+}
+
+type Rule struct {
+	ID     string `json:"id"`
+	Output Output `json:"output"`
+}
+
+type Output struct {
+	ChatID   string `json:"chat"`
+	ThreadID string `json:"thread"`
+}
+
 type Message struct {
 	Guild   string
 	Channel string

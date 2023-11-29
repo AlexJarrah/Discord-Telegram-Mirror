@@ -1,11 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"os"
 
+	"github.com/quo0001/Discord-Telegram-Mirror/internal"
 	"github.com/quo0001/Discord-Telegram-Mirror/internal/discord"
-	"github.com/tidwall/gjson"
 )
 
 func main() {
@@ -14,17 +15,13 @@ func main() {
 		log.Panic(err)
 	}
 
-	// Read configuration from file
-	f, err := os.ReadFile("data/config.json")
-	if err != nil {
+	// Parse the configuration file
+	if err := parseConfig(); err != nil {
 		log.Panic(err)
 	}
 
-	// Extract Discord token from config
-	token := gjson.Get(string(f), "discord.token").String()
-
 	// Start Discord monitor
-	if err := discord.Start(token); err != nil {
+	if err := discord.Start(); err != nil {
 		log.Panic(err)
 	}
 }
@@ -48,6 +45,25 @@ func createFiles() error {
 	}
 
 	// Write default values
-	_, err = f.Write([]byte(`{ "discord": { "token": "", "guilds": [], "channels": [] }, "telegram": { "botToken": "", "outputChat": "", "outputThreadId": "" } }`))
+	_, err = f.Write([]byte(`{ "credentials": { "discordToken": "", "telegramToken": "" }, "rules": { "guilds": [ { "id": "", "output": { "chat": "", "thread": "" } } ], "channels": [ { "id": "", "output": { "chat": "", "thread": "" } } ] } }`))
 	return err
+}
+
+// Parse the config file into a struct
+func parseConfig() error {
+	// Read configuration from file
+	f, err := os.ReadFile("data/config.json")
+	if err != nil {
+		return err
+	}
+
+	// Parse the JSON contents of the file
+	configuration := internal.Configuration{}
+	if err = json.Unmarshal(f, &configuration); err != nil {
+		return err
+	}
+
+	// Save the configuration to the global variable
+	internal.Config = configuration
+	return nil
 }

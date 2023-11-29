@@ -2,11 +2,10 @@ package discord
 
 import (
 	"log"
-	"os"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/quo0001/Discord-Telegram-Mirror/internal"
 	"github.com/quo0001/Discord-Telegram-Mirror/internal/telegram"
-	"github.com/tidwall/gjson"
 )
 
 // Handler function for new Discord messages
@@ -16,39 +15,49 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	// Read configuration from file
-	f, err := os.ReadFile("data/config.json")
-	if err != nil {
-		log.Println(err)
+	// Get the corresponding chat and thread IDs based on the guild and channel IDs
+	chat, thread := getChat(m.GuildID, m.ChannelID)
+
+	// Return if the message is not from a monitored guild or channel
+	if chat == "" {
+		return
 	}
 
-	// Extract Discord settings from config
-	guilds := gjson.Get(string(f), "discord.guilds").Array()
-	channels := gjson.Get(string(f), "discord.channels").Array()
-
-	// Check if the message is from a monitored guild or channel. If no guilds
-	// or channels are specified, all channels and guilds will be monitored.
-	if len(guilds) != 0 || len(channels) != 0 {
-		var resume bool
-		for _, id := range append(guilds, channels...) {
-			if id.Value() == m.GuildID || id.Value() == m.ChannelID {
-				resume = true
-				break
-			}
-		}
-
-		// Return if the message is not from a monitored guild or channel
-		if !resume {
-			return
-		}
-	}
-
-	// Parse & format the message
+	// Parse and format the message
 	msg := parse(m)
 	text := telegram.Format(msg)
 
-	// Send the formatted message to Telegram
-	if err = telegram.Send(text); err != nil {
+	// Send the formatted message to the corresponding chat and thread in Telegram
+	if err := telegram.Send(chat, thread, text); err != nil {
 		log.Println(err)
 	}
+}
+
+// Retrieves the corresponding chat and thread IDs based on the provided guild
+// and channel IDs. If no rule is found for the provided guild or channel IDs,
+// but a wildcard rule ("*") is, it will return the wildcard chat and thread IDs.
+func getChat(guildId, channelId string) (chat, thread string) {
+	// Initialize variables to store default chat and thread IDs in case no rules are found.
+	var defaultChat, defaultThread string
+
+	// Check if the message is from a monitored guild
+	for _, rule := range internal.Config.Rules.Guilds {
+		if rule.ID == guildId {
+			return rule.Output.ChatID, rule.Output.ThreadID
+		} else if rule.ID == "*" {
+			defaultChat, defaultThread = rule.Output.ChatID, rule.Output.ThreadID
+		}
+	}
+
+	// Check if the message is from a monitored channel
+	for _, rule := range internal.Config.Rules.Channels {
+		if rule.ID == channelId {
+			return rule.Output.ChatID, rule.Output.ThreadID
+		} else if rule.ID == "*" {
+			defaultChat, defaultThread = rule.Output.ChatID, rule.Output.ThreadID
+		}
+	}
+
+	// Return the default chat and thread IDs if no specific rules were found
+	return defaultChat, defaultThread
 }

@@ -4,31 +4,19 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 
-	"github.com/tidwall/gjson"
+	"github.com/quo0001/Discord-Telegram-Mirror/internal"
 )
 
 // Send sends the given text to the specified Telegram chat (data/config.json)
-func Send(text string) error {
-	// Read configuration from file
-	f, err := os.ReadFile("data/config.json")
-	if err != nil {
-		return fmt.Errorf("error reading config file: %w", err)
-	}
-
-	// Extract Telegram settings from config
-	token := gjson.Get(string(f), "telegram.botToken").String()
-	chat := gjson.Get(string(f), "telegram.outputChat").String()
-	thread := gjson.Get(string(f), "telegram.outputThreadId").String()
-
+func Send(chat, thread, text string) error {
 	// Validate Telegram settings
-	if token == "" || chat == "" {
-		return fmt.Errorf("invalid bot token or output chat")
+	if internal.Config.Credentials.TelegramToken == "" || chat == "" || text == "" {
+		return fmt.Errorf("invalid telegram bot token, chat id, or text")
 	}
 
 	// Build Telegram API URL
-	u := fmt.Sprintf("https://api.telegram.org/%s/sendMessage", token)
+	u := fmt.Sprintf("https://api.telegram.org/%s/sendMessage", internal.Config.Credentials.TelegramToken)
 	url, err := url.Parse(u)
 	if err != nil {
 		return fmt.Errorf("error parsing url: %w", err)

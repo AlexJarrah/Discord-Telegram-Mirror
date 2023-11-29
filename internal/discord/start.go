@@ -2,12 +2,13 @@ package discord
 
 import (
 	"github.com/bwmarrin/discordgo"
+	"github.com/quo0001/Discord-Telegram-Mirror/internal"
 )
 
 // Initiates the Discord monitoring via the provided token
-func Start(token string) error {
+func Start() error {
 	// Create a new Discord session
-	dg, err := discordgo.New(token)
+	dg, err := discordgo.New(internal.Config.Credentials.DiscordToken)
 	if err != nil {
 		return err
 	}
