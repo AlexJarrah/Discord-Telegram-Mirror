@@ -1,0 +1,26 @@
+{
+    "credentials": {
+        "discordToken": "",
+        "telegramToken": ""
+    },
+    "rules": {
+        "guilds": [
+            {
+                "id": "",
+                "output": {
+                    "chat": "",
+                    "thread": ""
+                }
+            }
+        ],
+        "channels": [
+            {
+                "id": "",
+                "output": {
+                    "chat": "",
+                    "thread": ""
+                }
+            }
+        ]
+    }
+}
