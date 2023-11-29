@@ -18,10 +18,8 @@ func Start() error {
 	// Specify required intents for the session
 	dg.Identify.Intents = discordgo.IntentsAll
 
-	// Add a ready handler to notify once monitoring has started
-	dg.AddHandler(ready)
-	// Add a message creation handler
-	dg.AddHandler(messageCreate)
+	dg.AddHandler(ready)         // Add a ready handler to notify once monitoring has started
+	dg.AddHandler(messageCreate) // Add a message creation handler
 
 	// Open a websocket connection
 	if err := dg.Open(); err != nil {
