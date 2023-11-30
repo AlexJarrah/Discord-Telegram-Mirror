@@ -10,7 +10,7 @@ import (
 
 // Formats a message for Telegram using HTML markup
 func Format(msg internal.Message) string {
-	divider := fmt.Sprintf("<u>%s</u>\n", strings.Repeat("- ", 25))
+	divider := fmt.Sprintf("%s\n", strings.Repeat("─", 20))
 
 	// Message URL
 	url := fmt.Sprintf("https://discord.com/channels/%s/%s/%s", msg.Guild, msg.Channel, msg.Message)
