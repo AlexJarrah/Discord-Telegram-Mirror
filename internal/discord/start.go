@@ -18,6 +18,9 @@ func Start() error {
 	// Specify required intents for the session
 	dg.Identify.Intents = discordgo.IntentsAll
 
+	// Update the session's user agent
+	dg.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+
 	dg.AddHandler(ready)         // Add a ready handler to notify once monitoring has started
 	dg.AddHandler(messageCreate) // Add a message creation handler
 
