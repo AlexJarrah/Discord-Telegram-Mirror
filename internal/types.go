@@ -72,6 +72,7 @@ type Footer struct {
 }
 
 type Profile struct {
+	ID        string
 	Name      string
 	AvatarURL string
 }

@@ -13,6 +13,7 @@ func parse(m *discordgo.MessageCreate) internal.Message {
 		Message: m.ID,
 		Content: m.Content,
 		Profile: internal.Profile{
+			ID:        m.Author.ID,
 			Name:      m.Author.Username,
 			AvatarURL: m.Author.AvatarURL(""),
 		},
