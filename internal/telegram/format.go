@@ -10,29 +10,24 @@ import (
 
 // Formats a message for Telegram using HTML markup
 func Format(msg internal.Message) string {
-	divider := fmt.Sprintf("%s\n", strings.Repeat("─", 20))
-
-	// User profile URL
-	userURL := fmt.Sprintf("https://discord.com/users/%s", msg.Profile.ID)
-	// Message URL
-	url := fmt.Sprintf("https://discord.com/channels/%s/%s/%s", msg.Guild, msg.Channel, msg.Message)
+	var (
+		res        string
+		divider    = fmt.Sprintf("%s\n", strings.Repeat("─", 20))
+		profileURL = fmt.Sprintf("https://discord.com/users/%s", msg.Profile.ID)
+		messageURL = fmt.Sprintf("https://discord.com/channels/%s/%s/%s", msg.Guild, msg.Channel, msg.Message)
+	)
 
 	// Add profile details
-	res := fmt.Sprintf("<a href='https://discord.com/users/%s'>%s</a> in <a href='%s'>#%s</a>\n", userURL, msg.Profile.Name, url, msg.Channel)
+	res = fmt.Sprintf("<a href='%s'>%s</a> in <a href='%s'>#%s</a>\n", profileURL, msg.Profile.Name, messageURL, msg.Channel)
 
 	// Add message content
 	if msg.Content != "" {
 		res += msg.Content + "\n"
 	}
 
-	// Return if message has no embeds
-	if len(msg.Embeds) == 0 {
-		return res
-	}
-
 	// Add embeds
 	for _, embed := range msg.Embeds {
-		// Skip if invalid embed
+		// Skip invalid embeds
 		if embed.Body.Title == "" {
 			continue
 		}
@@ -60,19 +55,28 @@ func Format(msg internal.Message) string {
 	}
 
 	res = strings.TrimSpace(res)
+	return markup(res)
+}
 
+// Changes Discord markdown to HTML markup
+func markup(msg string) string {
 	// Replace bold formatting
-	res = regexp.MustCompile(`\*\*(.*?)\*\*`).ReplaceAllString(res, "<strong>$1</strong>")
+	res := regexp.MustCompile(`\*\*(.*?)\*\*`).ReplaceAllString(msg, "<strong>$1</strong>")
+
 	// Replace italic formatting
 	res = regexp.MustCompile(`\*(.*?)\*`).ReplaceAllString(res, "<em>$1</em>")
+
 	// Replace code block formatting
 	res = regexp.MustCompile("`([^`]+)`").ReplaceAllString(res, "<code>$1</code>")
+
 	// Replace inline code formatting
 	res = regexp.MustCompile("```([^`]+)```").ReplaceAllString(res, "<pre>$1</pre>")
+
 	// Replace underline formatting
 	res = regexp.MustCompile(`__(.*?)__`).ReplaceAllString(res, "<u>$1</u>")
+
 	// Replace strikethrough formatting
 	res = regexp.MustCompile(`~~(.*?)~~`).ReplaceAllString(res, "<del>$1</del>")
 
-	return string(res)
+	return res
 }
