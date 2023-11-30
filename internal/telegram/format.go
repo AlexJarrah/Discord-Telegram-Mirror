@@ -25,6 +25,11 @@ func Format(msg internal.Message) string {
 		res += msg.Content + "\n"
 	}
 
+	if len(msg.Embeds) == 0 {
+		res = strings.TrimSpace(res)
+		return markup(res)
+	}
+
 	// Add embeds
 	for _, embed := range msg.Embeds {
 		// Skip invalid embeds
