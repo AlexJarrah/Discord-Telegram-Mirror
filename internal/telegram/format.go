@@ -12,11 +12,13 @@ import (
 func Format(msg internal.Message) string {
 	divider := fmt.Sprintf("%s\n", strings.Repeat("─", 20))
 
+	// User profile URL
+	userURL := fmt.Sprintf("https://discord.com/users/%s", msg.Profile.ID)
 	// Message URL
 	url := fmt.Sprintf("https://discord.com/channels/%s/%s/%s", msg.Guild, msg.Channel, msg.Message)
 
 	// Add profile details
-	res := fmt.Sprintf("<a href='%s'>%s</a>\n", url, msg.Profile.Name)
+	res := fmt.Sprintf("<a href='https://discord.com/users/%s'>%s</a> in <a href='%s'>#%s</a>\n", userURL, msg.Profile.Name, url, msg.Channel)
 
 	// Add message content
 	if msg.Content != "" {
