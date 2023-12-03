@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/quo0001/Discord-Telegram-Mirror/internal"
+	"github.com/AlexJarrah/Discord-Telegram-Mirror/internal"
 )
 
 // Formats a message for Telegram using HTML markup

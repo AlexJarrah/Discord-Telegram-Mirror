@@ -1,8 +1,8 @@
 package discord
 
 import (
+	"github.com/AlexJarrah/Discord-Telegram-Mirror/internal"
 	"github.com/bwmarrin/discordgo"
-	"github.com/quo0001/Discord-Telegram-Mirror/internal"
 )
 
 // Parses a Discord message into struct

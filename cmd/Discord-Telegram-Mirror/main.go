@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/quo0001/Discord-Telegram-Mirror/internal"
-	"github.com/quo0001/Discord-Telegram-Mirror/internal/discord"
+	"github.com/AlexJarrah/Discord-Telegram-Mirror/internal"
+	"github.com/AlexJarrah/Discord-Telegram-Mirror/internal/discord"
 )
 
 func main() {
@@ -28,7 +28,7 @@ func main() {
 
 // Creates necessary files if they don't exist and writes default values
 func createFiles() error {
-	// Returns if the config file already exists
+	// Returns if the config file already existsa45s36ert27dfy18gwHU(~BIJQVCN)
 	if _, err := os.Stat("data/config.json"); err == nil {
 		return nil
 	}

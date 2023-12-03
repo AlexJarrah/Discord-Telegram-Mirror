@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
+	"github.com/AlexJarrah/Discord-Telegram-Mirror/internal"
+	"github.com/AlexJarrah/Discord-Telegram-Mirror/internal/telegram"
 	"github.com/bwmarrin/discordgo"
-	"github.com/quo0001/Discord-Telegram-Mirror/internal"
-	"github.com/quo0001/Discord-Telegram-Mirror/internal/telegram"
 )
 
 // Handler function for new Discord messages

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/quo0001/Discord-Telegram-Mirror/internal"
+	"github.com/AlexJarrah/Discord-Telegram-Mirror/internal"
 )
 
 // Send sends the given text to the specified Telegram chat (data/config.json)

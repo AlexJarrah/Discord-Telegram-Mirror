@@ -3,8 +3,8 @@ package discord
 import (
 	"fmt"
 
+	"github.com/AlexJarrah/Discord-Telegram-Mirror/internal"
 	"github.com/bwmarrin/discordgo"
-	"github.com/quo0001/Discord-Telegram-Mirror/internal"
 )
 
 // Initiates the Discord monitoring via the provided token

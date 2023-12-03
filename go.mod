@@ -1,4 +1,4 @@
-module github.com/quo0001/Discord-Telegram-Mirror
+module github.com/AlexJarrah/Discord-Telegram-Mirror
 
 go 1.21.4
 

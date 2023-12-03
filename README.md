@@ -7,7 +7,7 @@ Discord-Telegram-Mirror is a tool designed to mirror messages from Discord to Te
 To install the tool, run the below commands in the location you want to install it:
 
 ```
-git clone https://github.com/quo0001/Discord-Telegram-Mirror.git
+git clone https://github.com/AlexJarrah/Discord-Telegram-Mirror.git
 cd Discord-Telegram-Mirror
 ```
 
