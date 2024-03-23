@@ -35,6 +35,6 @@ func Start() error {
 }
 
 // Notifies the user once monitoring has started
-func ready(s *discordgo.Session, m *discordgo.Ready) {
+func ready(s *discordgo.Session, _ *discordgo.Ready) {
 	fmt.Printf("Monitor running on %s... Press Ctrl-C to exit\n", s.State.User.Username)
 }

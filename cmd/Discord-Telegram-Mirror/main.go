@@ -28,7 +28,7 @@ func main() {
 
 // Creates necessary files if they don't exist and writes default values
 func createFiles() error {
-	// Returns if the config file already existsa45s36ert27dfy18gwHU(~BIJQVCN)
+	// Returns if the config file already exists
 	if _, err := os.Stat("data/config.json"); err == nil {
 		return nil
 	}
@@ -46,7 +46,7 @@ func createFiles() error {
 	defer f.Close()
 
 	// Write default values
-	_, err = f.Write([]byte(`{ "credentials": { "discordToken": "", "telegramToken": "" }, "rules": { "guilds": [ { "id": "", "output": { "chat": "", "thread": "" } } ], "channels": [ { "id": "", "output": { "chat": "", "thread": "" } } ] } }`))
+	_, err = f.Write([]byte(`{"credentials":{"discordToken":"","telegramToken":""},"rules":{"guilds":[{"id":"","output":{"chat":"","thread":""}}],"channels":[{"id":"","output":{"chat":"","thread":""}}]}}`))
 	return err
 }
 
