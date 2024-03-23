@@ -43,6 +43,7 @@ func createFiles() error {
 	if err != nil {
 		return err
 	}
+	defer f.Close()
 
 	// Write default values
 	_, err = f.Write([]byte(`{ "credentials": { "discordToken": "", "telegramToken": "" }, "rules": { "guilds": [ { "id": "", "output": { "chat": "", "thread": "" } } ], "channels": [ { "id": "", "output": { "chat": "", "thread": "" } } ] } }`))
